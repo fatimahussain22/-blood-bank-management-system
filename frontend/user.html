@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EF BLOODBANK - Donor Registration</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  :root {
+    --primary-color: #dc3545;
+    --primary-hover: #b02a37;
+    --surface: #ffffff;
+    --surface-alt: #f4f6f9;
+    --text-color: #1f1f1f;
+    --shadow-color: rgba(0, 0, 0, 0.15);
+  }
+
+  body {
+    background-color: var(--surface-alt);
+    font-family: "Google Sans", Roboto, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Navbar */
+  .navbar {
+    justify-content: center;
+    box-shadow: 0 2px 8px var(--shadow-color);
+  }
+  .navbar-brand {
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    color: #fff !important;
+    text-transform: uppercase;
+  }
+
+  /* Hero Section */
+  .hero {
+    position: relative;
+    height: 350px;
+    background: url('https://husaini.org/wp-content/uploads/2020/03/Slider-Blood-Bank-Color.png') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    overflow: hidden;
+    animation: moveBg 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes moveBg {
+    0% { background-position: center top; }
+    100% { background-position: center bottom; }
+  }
+
+  .hero-text {
+    text-align: center;
+    animation: fadeSlide 2s ease forwards;
+  }
+
+  @keyframes fadeSlide {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    background: rgba(220, 53, 69, 0.9);
+    padding: 10px 25px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 18px;
+    border-radius: 6px;
+    margin-top: 15px;
+    display: inline-block;
+  }
+
+  /* Card and Form Styling */
+  .card {
+    background: var(--surface);
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  }
+
+  .card-header {
+    border-bottom: none;
+    border-radius: 14px 14px 0 0;
+    background: var(--primary-color) !important;
+  }
+
+  .card-header h5 {
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: #333;
+  }
+
+  .form-control,
+  .form-select {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 0.75rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,0.25);
+  }
+
+  .btn-danger {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .btn-danger:hover {
+    background-color: var(--primary-hover);
+  }
+
+  @media (max-width: 768px) {
+    .navbar-brand { font-size: 1.2rem; }
+    .container { padding-left: 15px; padding-right: 15px; }
+  }
+
+  /* Success Message */
+  #successMsg {
+    display: none;
+    color: green;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <a class="navbar-brand mx-auto" href="#">EF BLOODBANK</a>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Become a Donor</h1>
+    <p>Your blood can save lives</p>
+  </div>
+</section>
+
+<div class="container mt-4">
+  <!-- User Donor Registration Form -->
+  <div class="card mb-4">
+    <div class="card-header text-white"><h5>Register as a Blood Donor</h5></div>
+    <div class="card-body">
+      <form id="userDonorForm">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" class="form-control" id="age" max="120" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="bloodGroup" class="form-label">Blood Group</label>
+            <select class="form-select" id="bloodGroup" required>
+              <option value="">Select Blood Group</option>
+              <option>A+</option><option>A-</option>
+              <option>B+</option><option>B-</option>
+              <option>AB+</option><option>AB-</option>
+              <option>O+</option><option>O-</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="city" class="form-label">City</label>
+            <select class="form-select" id="city" required>
+              <option value="">Select City</option>
+              <option>Karachi</option><option>Lahore</option>
+              <option>Islamabad</option><option>Rawalpindi</option>
+              <option>Faisalabad</option><option>Multan</option>
+              <option>Peshawar</option><option>Quetta</option>
+              <option>Hyderabad</option><option>Sialkot</option>
+              <option>Gujranwala</option><option>Bahawalpur</option>
+              <option>Sukkur</option><option>Mardan</option>
+              <option>Abbottabad</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="phone" pattern="[0-9]{11}" required>
+          </div>
+          <div class="col-md-6 mb-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-danger w-100">Submit</button>
+          </div>
+        </div>
+      </form>
+      <p id="successMsg">🎉 Thank you! Your information has been submitted successfully.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const API_BASE_URL = 'http://localhost:5000/donor';
+const userDonorForm = document.getElementById('userDonorForm');
+const successMsg = document.getElementById('successMsg');
+
+userDonorForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  const phone = document.getElementById('phone').value.trim();
+  const age = parseInt(document.getElementById('age').value);
+
+  if (phone.length !== 11 || !/^\d{11}$/.test(phone)) {
+    alert('Phone number must be exactly 11 digits.');
+    return;
+  }
+  if (age > 120) {
+    alert('Age cannot be greater than 120.');
+    return;
+  }
+
+  const donorData = {
+    name: document.getElementById('name').value.trim(),
+    age,
+    bloodGroup: document.getElementById('bloodGroup').value,
+    city: document.getElementById('city').value,
+    phone
+  };
+
+  await fetch(`${API_BASE_URL}/add`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(donorData)
+  });
+
+  userDonorForm.reset();
+  successMsg.style.display = 'block';
+  setTimeout(() => successMsg.style.display = 'none', 4000);
+});
+</script>
+</body>
+</html>
